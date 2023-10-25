@@ -20,7 +20,7 @@ sheets:Client spreadsheetClient = check new (spreadsheetConfig);
 final string sheetname = "completed-students";
 
 service /students on new http:Listener(9092) {
-    resource function post add(Student student) returns http:Ok|http:InternalServerError {
+    resource function post add(@http:Payload Student student) returns http:Ok|http:InternalServerError {
         if writeStudentDetails(student.ID, student.name, student.starredRepoCount) is error {
             return <http:InternalServerError> {
                 body: "Error occurred while writing student details"
